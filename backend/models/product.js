@@ -54,5 +54,13 @@ const productSchema = new mongoose.Schema ({
         default : Date.now,
     },
 })
+//Copy _id to id field para limpyo
+productSchema.virtual('id').get(function () {
+    return this._id.toHexString();
+});
+
+productSchema.set('toJSON', {
+    virtuals: true,
+});
 
 exports.Product = mongoose.model('Product', productSchema);
