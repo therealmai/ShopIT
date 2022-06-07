@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 
 
 
+
 //READ API 
 router.get(`/`, async (req, res) =>{
     let filter = {};
@@ -36,7 +37,7 @@ router.get(`/:id`, async (req, res) =>{
     res.send(product);
 })
 
-router.get('/get/count', async (req, res) => {
+router.get(`/get/count`, async (req, res) => {
     const productCount = await Product.countDocuments();
 
     if(!productCount){
@@ -49,7 +50,7 @@ router.get('/get/count', async (req, res) => {
     });
 })
 
-router.get('/get/featured/:count', async (req, res) => {
+router.get(`/get/featured/:count`, async (req, res) => {
     const count = req.params.count ? req.params.count : 0;
     const products = await Product.find({isFeatured : true}).limit(+count);
 
@@ -90,7 +91,7 @@ router.post(`/`, async (req, res) =>{
 
 
 
-router.put('/:id', async (req, res) => {
+router.put(`/:id`, async (req, res) => {
     
     if(!mongoose.isValidObjectId(req.params.id)){
         res.status(400).send('Invalid Product Id');
@@ -123,7 +124,7 @@ router.put('/:id', async (req, res) => {
     res.send(product);
 })
 
-router.delete('/:id', (req, res) =>{
+router.delete(`/:id`, (req, res) =>{
     Product.findByIdAndRemove(req.params.id).then(product => {
         if(product){
             return res.status(200).json({success: true, message: 'the product is deleted'});
