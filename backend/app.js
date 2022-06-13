@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const productsRouter = require('./routes/product');
 const categoryRouter = require('./routes/category');
 const userRouter = require('./routes/users');
+const orderRouter = require('./routes/order');
 const authJwt = require('./helpers/jwt');
 const errorHandler = require('./helpers/error-handler');
 app.use(cors());
@@ -23,12 +24,14 @@ app.use(bodyParser.json());
 app.use(morgan('tiny'));
 app.use(authJwt());
 app.use(errorHandler)
+app.use('/public/uploads', express.static(__dirname + '/public/uploads' ))
 
 
 //Routes
 app.use(`${api}/users`, userRouter);
 app.use(`${api}/products`, productsRouter);
 app.use(`${api}/category`, categoryRouter);
+app.use(`${api}/orders`, orderRouter);
 
 //DB CONNECT
 mongoose.connect(process.env.CONNECTION_STRING, {
